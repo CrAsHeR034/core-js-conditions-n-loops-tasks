@@ -406,54 +406,6 @@ function getSpiralMatrix(size) {
   return matrix;
 }
 
-//   // Initialize the matrix
-//   const matrix = [];
-//   for (let i = 0; i < size; i += 1) {
-//     matrix[i] = [];
-//     for (let j = 0; j < size; j += 1) {
-//       matrix[i][j] = 0;
-//     }
-//   }
-
-//   let num = 1;
-//   let top = 0;
-//   let bottom = size - 1;
-//   let left = 0;
-//   let right = size - 1;
-
-//   while (num <= size * size) {
-//     // Traverse from left to right on the top row
-//     for (let i = left; i <= right; i += 1) {
-//       matrix[top][i] = num;
-//       num += 1;
-//     }
-//     top += 1;
-
-//     // Traverse from top to bottom on the rightmost column
-//     for (let i = top; i <= bottom; i += 1) {
-//       matrix[i][right] = num;
-//       num += 1;
-//     }
-//     right -= 1;
-
-//     // Traverse from right to left on the bottom row
-//     for (let i = right; i >= left; i -= 1) {
-//       matrix[bottom][i] = num;
-//       num += 1;
-//     }
-//     bottom -= 1;
-
-//     // Traverse from bottom to top on the leftmost column
-//     for (let i = bottom; i >= top; i -= 1) {
-//       matrix[i][left] = num;
-//       num += 1;
-//     }
-//     left += 1;
-//   }
-
-//   return matrix;
-// }
-
 /**
  * Rotates a matrix by 90 degrees clockwise in place.
  * Take into account that the matrix size can be very large. Consider how you can optimize your solution.
@@ -469,26 +421,43 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  // const n = matrix.length;
-  // const rotatedMatrix = [];
-  // // Initialize the rotated matrix with zeros
-  // for (let i = 0; i < n; i += 1) {
-  //   rotatedMatrix.push(new Array(n).fill(0));
-  // }
-  // // Transpose the matrix
-  // for (let i = 0; i < n; i += 1) {
-  //   for (let j = 0; j < n; j += 1) {
-  //     rotatedMatrix[i][j] = matrix[j][i];
-  //   }
-  // }
-  // // Reverse the rows of the transposed matrix
-  // for (let i = 0; i < n; i += 1) {
-  //   rotatedMatrix[i].reverse();
-  // }
-  // return rotatedMatrix;
-  throw new Error('Not implemented');
+// function rotateMatrix(matrix) {
+//   const n = matrix.length;
+//   const rotatedMatrix = [];
+//   // Initialize the rotated matrix with zeros
+//   for (let i = 0; i < n; i += 1) {
+//     rotatedMatrix.push(new Array(n).fill(0));
+//   }
+//   // Transpose the matrix
+//   for (let i = 0; i < n; i += 1) {
+//     for (let j = 0; j < n; j += 1) {
+//       rotatedMatrix[i][j] = matrix[j][i];
+//     }
+//   }
+//   // Reverse the rows of the transposed matrix
+//   for (let i = 0; i < n; i += 1) {
+//     rotatedMatrix[i].reverse();
+//   }
+//   return rotatedMatrix;
+// }
+// throw new Error('Not implemented');
+
+function rotateMatrix(matrix) {
+  const n = matrix.length;
+  const rotatedMatrix = [];
+  // Initialize the rotated matrix with zeros
+  for (let i = 0; i < n; i += 1) {
+    rotatedMatrix.push(new Array(n).fill(0));
+  }
+  // Transpose the matrix
+  for (let i = 0; i < n; i += 1) {
+    for (let j = 0; j < n; j += 1) {
+      rotatedMatrix[j][n - i - 1] = matrix[i][j];
+    }
+  }
+  return rotatedMatrix;
 }
+
 /**
  * Sorts an array of numbers in ascending order in place.
  * Employ any sorting algorithm of your choice.
@@ -503,21 +472,20 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  // const sortedArr = arr.slice(); // Make a copy of the original array
-  // const n = sortedArr.length;
-  // for (let i = 0; i < n - 1; i += 1) {
-  //   for (let j = 0; j < n - 1 - i; j += 1) {
-  //     if (sortedArr[j] > sortedArr[j + 1]) {
-  //       // Swap elements if they are in the wrong order
-  //       const temp = sortedArr[j];
-  //       sortedArr[j] = sortedArr[j + 1];
-  //       sortedArr[j + 1] = temp;
-  //     }
-  //   }
-  // }
-  // return sortedArr;
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const sortedArr = arr.slice(); // Make a copy of the original array
+  const n = sortedArr.length;
+  for (let i = 0; i < n - 1; i += 1) {
+    for (let j = 0; j < n - 1 - i; j += 1) {
+      if (sortedArr[j] > sortedArr[j + 1]) {
+        // Swap elements if they are in the wrong order
+        const temp = sortedArr[j];
+        sortedArr[j] = sortedArr[j + 1];
+        sortedArr[j + 1] = temp;
+      }
+    }
+  }
+  return sortedArr;
 }
 
 /**
@@ -537,31 +505,30 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  // const strLength = str.length;
-  // let chars = str.split('');
+function shuffleChar(str, iterations) {
+  const strLength = str.length;
+  let chars = str.split('');
 
-  // for (let iter = 0; iter < iterations; iter += 1) {
-  //   const oddChars = [];
+  for (let iter = 0; iter < iterations; iter += 1) {
+    const oddChars = [];
 
-  //   // Extract odd-indexed characters
-  //   for (let i = 1; i < strLength; i += 2) {
-  //     oddChars.push(chars[i]);
-  //   }
+    // Extract odd-indexed characters
+    for (let i = 1; i < strLength; i += 2) {
+      oddChars.push(chars[i]);
+    }
 
-  //   // Reconstruct the string with even-indexed characters followed by odd-indexed characters
-  //   const newStr = [];
-  //   for (let i = 0; i < strLength; i += 2) {
-  //     newStr.push(chars[i]);
-  //   }
+    // Reconstruct the string with even-indexed characters followed by odd-indexed characters
+    const newStr = [];
+    for (let i = 0; i < strLength; i += 2) {
+      newStr.push(chars[i]);
+    }
 
-  //   // Concatenate the arrays and join to form the new string
-  //   const combinedChars = newStr.concat(oddChars);
-  //   chars = combinedChars;
-  // }
+    // Concatenate the arrays and join to form the new string
+    const combinedChars = newStr.concat(oddChars);
+    chars = combinedChars;
+  }
 
-  // return chars.join('');
-  throw new Error('Not implemented');
+  return chars.join('');
 }
 
 /**
@@ -581,52 +548,51 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  // // Convert number to an array of digits
-  // const digits = [];
-  // let num = number;
-  // while (num > 0) {
-  //   digits.unshift(num % 10);
-  //   num = Math.floor(num / 10);
-  // }
+function getNearestBigger(number) {
+  // Convert number to an array of digits
+  const digits = [];
+  let num = number;
+  while (num > 0) {
+    digits.unshift(num % 10);
+    num = Math.floor(num / 10);
+  }
 
-  // // Find the pivot point where the number needs to be changed
-  // let pivotIndex = -1;
-  // for (let i = digits.length - 2; i >= 0; i -= 1) {
-  //   if (digits[i] < digits[i + 1]) {
-  //     pivotIndex = i;
-  //     break;
-  //   }
-  // }
+  // Find the pivot point where the number needs to be changed
+  let pivotIndex = -1;
+  for (let i = digits.length - 2; i >= 0; i -= 1) {
+    if (digits[i] < digits[i + 1]) {
+      pivotIndex = i;
+      break;
+    }
+  }
 
-  // // If no pivot found, return the original number
-  // if (pivotIndex === -1) {
-  //   return number;
-  // }
+  // If no pivot found, return the original number
+  if (pivotIndex === -1) {
+    return number;
+  }
 
-  // // Find the smallest digit on the right that is larger than the pivot
-  // let nextGreater = pivotIndex + 1;
-  // for (let i = pivotIndex + 1; i < digits.length; i += 1) {
-  //   if (digits[i] > digits[pivotIndex] && digits[i] < digits[nextGreater]) {
-  //     nextGreater = i;
-  //   }
-  // }
+  // Find the smallest digit on the right that is larger than the pivot
+  let nextGreater = pivotIndex + 1;
+  for (let i = pivotIndex + 1; i < digits.length; i += 1) {
+    if (digits[i] > digits[pivotIndex] && digits[i] < digits[nextGreater]) {
+      nextGreater = i;
+    }
+  }
 
-  // // Swap pivot and next greater
-  // [digits[pivotIndex], digits[nextGreater]] = [
-  //   digits[nextGreater],
-  //   digits[pivotIndex],
-  // ];
+  // Swap pivot and next greater
+  [digits[pivotIndex], digits[nextGreater]] = [
+    digits[nextGreater],
+    digits[pivotIndex],
+  ];
 
-  // // Sort the digits to the right of pivot in ascending order
-  // const rightOfPivot = digits.splice(pivotIndex + 1);
-  // rightOfPivot.sort((a, b) => a - b);
+  // Sort the digits to the right of pivot in ascending order
+  const rightOfPivot = digits.splice(pivotIndex + 1);
+  rightOfPivot.sort((a, b) => a - b);
 
-  // // Concatenate the arrays and convert back to number
-  // const result = parseInt(digits.concat(rightOfPivot).join(''), 10);
+  // Concatenate the arrays and convert back to number
+  const result = parseInt(digits.concat(rightOfPivot).join(''), 10);
 
-  // return result;
-  throw new Error('Not implemented');
+  return result;
 }
 
 module.exports = {
